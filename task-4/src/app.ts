@@ -1,34 +1,51 @@
 require('dotenv').config();
 import express from 'express';
-import { addCar, getCars } from './controller/car.controller';
-import { addUser, login } from './controller/user.controller';
 import session from 'express-session';
 import passport from 'passport';
 import * as passportLocal from 'passport-local';
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import './orm/mongodb';
-import { authUser, isAuthenticated } from './middleware/auth';
-
+import { authUser, jwtAuth } from './middleware/auth';
+import RedisStore from "connect-redis"
+import redisClient from './orm/redis';
+import router from './routes';
 const app = express();
 const port = 3000;
+
+const redisStore = new RedisStore({
+    client: redisClient,
+    disableTouch: true,
+    prefix: "session:"
+})
 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ //add req.session
-    secret: 'keyboard cat',
+    secret: process.env.SESSION_SECRET as string,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }
+    cookie: {
+        secure: false,
+        httpOnly: true,
+    },
+    store: redisStore
+
 }));
 
 app.use(passport.initialize()); //add authenticate method to req
 app.use(passport.session()); // add req.session.passport
 
-
 passport.use(
     new passportLocal.Strategy(authUser)
 );
 
+passport.use(
+    new JwtStrategy({
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        secretOrKey: process.env.JWT_SECRET,
+    }, jwtAuth)
+);
 
 passport.serializeUser((user, done) => {
     done(null, user);
@@ -38,24 +55,11 @@ passport.deserializeUser((user, done) => {
 });
 
 
-
-
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
+app.use(router);
 
-app.post('/login',
-    passport.authenticate('local', { session: true }),
-    login
-);
-
-app.post('/car', addCar)
-app.post('/user', addUser)
-
-app.get('/user', isAuthenticated, (req, res) => {
-    res.send('Hello World! Authenticated');
-});
-app.get('/car', getCars);
 
 app.listen(port, () => {
     console.log(`Server started on port: ${port}`);

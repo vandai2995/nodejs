@@ -15,6 +15,7 @@ export const addCar = async (req: Request, res: Response) => {
 
 export const getCars = async (req: Request, res: Response) => {
     try {
+        console.log('getCars');
         const result = await CarService.getInstance().getCars();
         res.send(result);
     } catch (error: any) {

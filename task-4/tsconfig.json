@@ -8,7 +8,15 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "strictPropertyInitialization": false,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    // "typeRoots": [
+    //   "./node_module/@types",
+    //   "./src/types",
+    //   ],
+    // "baseUrl": "src/",
+
+  },
+  // "files":["types/type.d.ts"],
+  
 }
 

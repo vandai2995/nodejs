@@ -14,7 +14,6 @@ export interface CarsDocument extends Cars, Document {
 }
 
 export interface ICarsModel extends Model<CarsDocument> {
-    // findUserById(id: string): Promise<UsersDocument>;
 }
 
 export const CarsSchema: Schema<CarsDocument, ICarsModel> = new Schema<CarsDocument, ICarsModel>({

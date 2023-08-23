@@ -1,11 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 
 export const authUser = (user: string, password: string, done: any) => {
-    console.log('authUser');
-    console.log(`Value of "User" in authUser function ----> ${user}`)         //passport will populate, user = req.body.username
-    console.log(`Value of "Password" in authUser function ----> ${password}`) //passport will popuplate, password = req.body.password
     const authenticatedUser = {
         name: 'John',
+        role: 'member',
         id: 1,
     }
     return done(null, authenticatedUser);
@@ -21,8 +19,18 @@ export const deserializeUser = (user: any, done: any) => {
 
 
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.user);
     if (req.isAuthenticated()) {
         return next();
     }
     res.status(401).send('Unauthorized');
+}
+
+export const jwtAuth = (jwt_payload: any, done: any) => {
+    console.log(jwt_payload);
+    if (jwt_payload) {
+        return done(null, jwt_payload);
+    }
+    return done(null, false);
+
 }
