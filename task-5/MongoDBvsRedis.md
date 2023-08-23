@@ -33,5 +33,6 @@ MongoDB là một cơ sở dữ liệu lưu trữ tài liệu, trong khi Redis t
     ```
 
 ## Tài liệu tham khảo
-https://aws.amazon.com/vi/compare/the-difference-between-redis-and-mongodb/#:~:text=%C4%90%E1%BB%83%20l%C6%B0u%20tr%E1%BB%AF%20d%E1%BB%AF%20li%E1%BB%87u,%C4%91%E1%BB%87m%20v%C3%A0%20l%C6%B0u%20tr%E1%BB%AF%20phi%C3%AAn.
-https://www.mongodb.com/compare/mongodb-vs-redis
+- https://aws.amazon.com/vi/compare/the-difference-between-redis-and-mongodb/#:~:text=%C4%90%E1%BB%83%20l%C6%B0u%20tr%E1%BB%AF%20d%E1%BB%AF%20li%E1%BB%87u,%C4%91%E1%BB%87m%20v%C3%A0%20l%C6%B0u%20tr%E1%BB%AF%20phi%C3%AAn.
+
+- https://www.mongodb.com/compare/mongodb-vs-redis
